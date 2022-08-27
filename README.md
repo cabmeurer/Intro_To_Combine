@@ -85,5 +85,3 @@ Here we are subscribing to the pokemon publisher of the controller, so anytime t
 There we go, we have updated our application to use Combine to handle asynchronous logic, where we previously used completion handlers.
 This just scratches the surface of what Combine is capable of doing, but was hopefully a nice introduction to the framework.
 Just like RxSwift or async/await this is just another tool you can add to your arsenal so you can have more control over the flow of your application.
-
-For more information checkout: Raywenderlich: Getting Started with Combine[https://www.raywenderlich.com/7864801-combine-getting-started]
