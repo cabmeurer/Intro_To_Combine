@@ -32,7 +32,7 @@ class DetailViewController: UIViewController {
         DispatchQueue.main.async { [weak self] in
             self?.nameLabel.text = details.name.capitalized
             self?.nameLabel.isHidden = false
-            self?.pokedexIDLabel.text = "Pokedex # \(details.id)"
+            self?.pokedexIDLabel.text = "\(K.pokedex.rawValue) # \(details.id)"
             self?.pokedexIDLabel.isHidden = false
             self?.imageView.image = self?.controller?.getSprite(for: details)
             self?.imageView.isHidden = false

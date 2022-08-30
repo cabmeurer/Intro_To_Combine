@@ -19,7 +19,7 @@ class PokemonController {
     @Published var error: NetworkingError?
     
     func getPokemon() {
-        let published = networkService.fetchData(from: "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0", for: Results.self)
+        let published = networkService.fetchData(from: K.firstGenURL.rawValue, for: Results.self)
         published?.sink(receiveCompletion: { completion in
             if case let .failure(error) = completion {
                 self.error = error

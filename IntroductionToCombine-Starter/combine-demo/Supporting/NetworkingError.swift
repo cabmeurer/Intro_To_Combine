@@ -17,7 +17,7 @@ extension NetworkingError: LocalizedError {
     var localizedDescription: String {
         switch self {
         case .invalidURL:
-            return NSLocalizedString("invalidURL", comment: "The url is not valid, unable to connect to server")
+            return NSLocalizedString("invalidURL", comment: K.invalidURL.rawValue)
         case .errorDecoding(let message):
             return NSLocalizedString("errorDecoding", comment: message)
         case .errorFromServer(let message):
