@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Pokedex"
+        navigationItem.title = K.pokedex.rawValue
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -48,7 +48,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "Pokemon") else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: K.pokemon.rawValue) else {
             fatalError("Fatal Error: App is in an unexpected State")
         }
         
@@ -62,21 +62,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let viewController = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController, let row = tableView.indexPathForSelectedRow?.row else { return }
+        guard let viewController = UIStoryboard(name: K.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: K.detailViewController.rawValue) as? DetailViewController, let row = tableView.indexPathForSelectedRow?.row else { return }
         viewController.setup(pokemon[row], controller)
         navigationController?.pushViewController(viewController, animated: true)
-    }
-}
-
-extension UIViewController {
-    func presentAlert(with error: LocalizedError) {
-        DispatchQueue.main.async {
-            let alertController = UIAlertController(title: "Error loading data", message: error.localizedDescription, preferredStyle: .alert)
-            let action = UIAlertAction(title: "Okay", style: .default) { _ in
-                self.dismiss(animated: true)
-            }
-            alertController.addAction(action)
-            self.present(alertController, animated: true)
-        }
     }
 }

@@ -13,7 +13,7 @@ class DetailViewController: UIViewController {
     private(set) var pokemon: Pokemon?
     private(set) var controller: PokemonController?
     
-    private var cancellable: AnyCancellable?
+    private(set) var cancellable: AnyCancellable?
     
     private let spinner = UIActivityIndicatorView(style: .large)
     
@@ -23,13 +23,10 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         startSpinner()
         handleErrors()
         loadData()
-        
     }
-    
     
     private func layoutView(with details: PokemonDetails) {
         DispatchQueue.main.async { [weak self] in
@@ -67,7 +64,6 @@ class DetailViewController: UIViewController {
             guard let details = details else { return }
             self.layoutView(with: details)
         })
-        
         controller?.getDetails(for: pokemon)
     }
     

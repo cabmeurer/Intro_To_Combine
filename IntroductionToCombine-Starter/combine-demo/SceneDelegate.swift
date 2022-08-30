@@ -14,7 +14,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        guard let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MainViewController") as? MainViewController else { return }
+        guard let viewController = UIStoryboard(name: K.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: K.mainViewController.rawValue) as? MainViewController else { return }
         
         let networkService = NetworkService()
         let controller = PokemonController(networkService)

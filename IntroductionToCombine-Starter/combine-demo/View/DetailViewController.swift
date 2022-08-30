@@ -23,9 +23,7 @@ class DetailViewController: UIViewController {
         
         startSpinner()
         loadData()
-        
     }
-    
     
     private func layoutView(with details: PokemonDetails) {
         DispatchQueue.main.async { [weak self] in

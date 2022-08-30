@@ -13,7 +13,7 @@ class PokemonController {
     private (set)var networkService: Networkable
     
     func getPokemon(completion: @escaping (Result<Results, NetworkingError>) -> Void) {
-        networkService.fetchData(from: "https://pokeapi.co/api/v2/pokemon?limit=151&offset=0", for: Results.self, completion: { result in
+        networkService.fetchData(from: K.firstGenURL.rawValue, for: Results.self, completion: { result in
             completion(result)
         })
     }

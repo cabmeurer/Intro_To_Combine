@@ -26,7 +26,8 @@ class PokemonController {
             }
         }, receiveValue: { decodedData in
             self.pokemon = decodedData.results
-        }).store(in: &subscriptions)
+        })
+        .store(in: &subscriptions)
     }
     
     func getDetails(for pokemon: Pokemon) {
@@ -36,7 +37,8 @@ class PokemonController {
             }
         }, receiveValue: { pokemonDetails in
             self.pokemonDetails = pokemonDetails
-        }).store(in: &subscriptions)
+        })
+        .store(in: &subscriptions)
     }
     
     func getSprite(for details: PokemonDetails) -> UIImage? {
