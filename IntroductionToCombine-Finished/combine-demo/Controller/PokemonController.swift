@@ -20,9 +20,9 @@ class PokemonController {
     
     func getPokemon() {
         let published = networkService.fetchData(from: K.firstGenURL.rawValue, for: Results.self)
-        published?.sink(receiveCompletion: { completion in
+        published?.sink(receiveCompletion: { [weak self] completion in
             if case let .failure(error) = completion {
-                self.error = error
+                self?.error = error
             }
         }, receiveValue: { decodedData in
             self.pokemon = decodedData.results
@@ -35,8 +35,8 @@ class PokemonController {
             if case let .failure(error) = completion {
                 self.error = error
             }
-        }, receiveValue: { pokemonDetails in
-            self.pokemonDetails = pokemonDetails
+        }, receiveValue: { [weak self] pokemonDetails in
+            self?.pokemonDetails = pokemonDetails
         })
         .store(in: &subscriptions)
     }

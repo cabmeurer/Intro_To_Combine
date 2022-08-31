@@ -20,6 +20,7 @@ class MainViewController: UIViewController {
     }
     
     private var cancellable: AnyCancellable?
+    private var cancellableError: AnyCancellable?
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -35,7 +36,7 @@ class MainViewController: UIViewController {
     }
     
     private func handleErrors() {
-        self.cancellable = controller?.$error.sink(receiveValue: { error in
+        self.cancellableError = controller?.$error.sink(receiveValue: { error in
             guard let error = error else { return }
             self.presentAlert(with: error)
         })
