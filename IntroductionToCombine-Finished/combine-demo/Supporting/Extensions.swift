@@ -9,13 +9,13 @@ import UIKit
 
 extension UIViewController {
     func presentAlert(with error: LocalizedError) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             let alertController = UIAlertController(title: K.errorLoadingData.rawValue, message: error.localizedDescription, preferredStyle: .alert)
-            let action = UIAlertAction(title: K.okay.rawValue, style: .default) { _ in
-                self.dismiss(animated: true)
+            let action = UIAlertAction(title: K.okay.rawValue, style: .default) { [weak self] _ in
+                self?.dismiss(animated: true)
             }
             alertController.addAction(action)
-            self.present(alertController, animated: true)
+            self?.present(alertController, animated: true)
         }
     }
 }

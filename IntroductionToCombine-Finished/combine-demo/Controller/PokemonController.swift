@@ -19,21 +19,20 @@ class PokemonController {
     @Published var error: NetworkingError?
     
     func getPokemon() {
-        let published = networkService.fetchData(from: K.firstGenURL.rawValue, for: Results.self)
-        published?.sink(receiveCompletion: { [weak self] completion in
+        networkService.fetchData(from: K.firstGenURL.rawValue, for: Results.self)?.sink(receiveCompletion: { [weak self] completion in
             if case let .failure(error) = completion {
                 self?.error = error
             }
-        }, receiveValue: { decodedData in
-            self.pokemon = decodedData.results
+        }, receiveValue: { [weak self] decodedData in
+            self?.pokemon = decodedData.results
         })
         .store(in: &subscriptions)
     }
     
     func getDetails(for pokemon: Pokemon) {
-        networkService.fetchData(from: pokemon.url, for: PokemonDetails.self)?.sink(receiveCompletion: { completion in
+        networkService.fetchData(from: pokemon.url, for: PokemonDetails.self)?.sink(receiveCompletion: { [weak self] completion in
             if case let .failure(error) = completion {
-                self.error = error
+                self?.error = error
             }
         }, receiveValue: { [weak self] pokemonDetails in
             self?.pokemonDetails = pokemonDetails

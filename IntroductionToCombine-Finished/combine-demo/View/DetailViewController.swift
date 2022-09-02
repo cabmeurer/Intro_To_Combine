@@ -13,7 +13,7 @@ class DetailViewController: UIViewController {
     private(set) var pokemon: Pokemon?
     private(set) var controller: PokemonController?
     
-    private(set) var cancellable: AnyCancellable?
+    private(set) var cancellable = Set<AnyCancellable>()
     
     private let spinner = UIActivityIndicatorView(style: .large)
     
@@ -49,10 +49,10 @@ class DetailViewController: UIViewController {
     }
     
     private func handleErrors() {
-        self.cancellable = controller?.$error.sink(receiveValue: { error in
+        controller?.$error.sink(receiveValue: { [weak self] error in
             guard let error = error else { return }
-            self.presentAlert(with: error)
-        })
+            self?.presentAlert(with: error)
+        }).store(in: &cancellable)
     }
     
     private func loadData() {
@@ -60,10 +60,10 @@ class DetailViewController: UIViewController {
             fatalError("Fatal Error: App is in an unexpected state")
         }
         
-        cancellable = controller?.$pokemonDetails.sink(receiveValue: { details in
+        controller?.$pokemonDetails.sink(receiveValue: { [weak self] details in
             guard let details = details else { return }
-            self.layoutView(with: details)
-        })
+            self?.layoutView(with: details)
+        }).store(in: &cancellable)
         controller?.getDetails(for: pokemon)
     }
     

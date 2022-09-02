@@ -13,14 +13,13 @@ class MainViewController: UIViewController {
     private(set) var controller: PokemonController?
     private(set) var pokemon: [Pokemon] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                self?.tableView.reloadData()
             }
         }
     }
     
-    private var cancellable: AnyCancellable?
-    private var cancellableError: AnyCancellable?
+    private var cancellable = Set<AnyCancellable>()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -36,14 +35,16 @@ class MainViewController: UIViewController {
     }
     
     private func handleErrors() {
-        self.cancellableError = controller?.$error.sink(receiveValue: { error in
+        controller?.$error.sink(receiveValue: { [weak self] error in
             guard let error = error else { return }
-            self.presentAlert(with: error)
-        })
+            self?.presentAlert(with: error)
+        }).store(in: &cancellable)
     }
     
     private func loadData() {
-        self.cancellable = controller?.$pokemon.sink(receiveValue: { self.pokemon = $0 })
+        controller?.$pokemon.sink(receiveValue: { [weak self] pokemon in
+            self?.pokemon = pokemon
+        }).store(in: &cancellable)
         controller?.getPokemon()
     }
     
